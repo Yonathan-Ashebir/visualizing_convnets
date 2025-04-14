@@ -2,7 +2,8 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { ImageData, OverlayBounds, ComparisonResult } from '../types';
 import ImageSelector from './ImageSelector';
 import ComparisonDisplay from './ComparisonDisplay';
-import ImageOverlay from './ImageOverlay';
+import ImageOverlay from './ImageOverlay'
+
 
 interface DualImageComparisonProps {
   onComparisonChange?: (result: ComparisonResult) => void;

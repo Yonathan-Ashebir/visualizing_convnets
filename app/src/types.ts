@@ -1,8 +1,6 @@
 export interface ImageData {
   name: string;
   url: string;
-  width: number;
-  height: number;
 }
 
 export interface ClassificationResult {

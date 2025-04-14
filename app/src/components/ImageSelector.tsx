@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import AsyncSelect from 'react-select/async';
 import { ImageData } from '../types';
 import { Search, Image as ImageIcon } from 'lucide-react';
+import { api, getImageList } from '../api';
 
 interface ImageSelectorProps {
   onImageSelect: (image: ImageData) => void;
@@ -11,39 +12,45 @@ const demoImages: ImageData[] = [
   {
     name: "Mountain Landscape",
     url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4",
-    width: 2000,
-    height: 1333
   },
   {
     name: "Ocean Sunset",
     url: "https://images.unsplash.com/photo-1503803548695-c2a7b4a5b875",
-    width: 2448,
-    height: 1624
   },
   {
     name: "Forest Path",
     url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
-    width: 2560,
-    height: 1600
   },
   {
     name: "City Skyline",
     url: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000",
-    width: 1920,
-    height: 1280
   }
 ];
 
 const ImageSelector: React.FC<ImageSelectorProps> = ({ onImageSelect }) => {
-  const loadOptions = async (inputValue: string) => {
-    const filteredImages = demoImages.filter(image =>
-      image.name.toLowerCase().includes(inputValue.toLowerCase())
-    );
-    
-    return filteredImages.map(image => ({
-      value: image,
-      label: image.name
-    }));
+  const latestRequest = useRef<Promise<ImageData[]>>()
+
+  const loadImagesList = async (inputValue: string) => {
+    const myPromise = latestRequest.current ?? api.getImageList()
+     
+    try {
+      latestRequest.current = myPromise
+      const result = await myPromise
+
+      const filteredImages = result.filter(image =>
+        image.name.toLowerCase().includes(inputValue.toLowerCase())
+      );
+  
+      return filteredImages.map(image => ({
+        value: image,
+        label: image.name
+      }));
+    } catch (e) {
+      if (latestRequest.current == myPromise){
+        latestRequest.current = undefined
+      }
+      throw e
+    }
   };
 
   const customStyles = {
@@ -87,7 +94,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ onImageSelect }) => {
       <AsyncSelect
         cacheOptions
         defaultOptions
-        loadOptions={loadOptions}
+        loadOptions={loadImagesList}
         onChange={(option) => option && onImageSelect(option.value)}
         placeholder="Search for an image..."
         styles={customStyles}

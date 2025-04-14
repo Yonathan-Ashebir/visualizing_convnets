@@ -65,19 +65,18 @@ dotenv = ["python-dotenv"]
 
 [[package]]
 name = "flask-cors"
-version = "5.0.1"
-description = "A Flask extension simplifying CORS support"
+version = "5.0.0"
+description = "A Flask extension adding a decorator for CORS support"
 optional = false
-python-versions = "<4.0,>=3.9"
+python-versions = "*"
 groups = ["main"]
 files = [
-    {file = "flask_cors-5.0.1-py3-none-any.whl", hash = "sha256:fa5cb364ead54bbf401a26dbf03030c6b18fb2fcaf70408096a572b409586b0c"},
-    {file = "flask_cors-5.0.1.tar.gz", hash = "sha256:6ccb38d16d6b72bbc156c1c3f192bc435bfcc3c2bc864b2df1eb9b2d97b2403c"},
+    {file = "Flask_Cors-5.0.0-py2.py3-none-any.whl", hash = "sha256:b9e307d082a9261c100d8fb0ba909eec6a228ed1b60a8315fd85f783d61910bc"},
+    {file = "flask_cors-5.0.0.tar.gz", hash = "sha256:5aadb4b950c4e93745034594d9f3ea6591f734bb3662e16e255ffbf5e89c88ef"},
 ]
 
 [package.dependencies]
-flask = ">=0.9"
-Werkzeug = ">=0.7"
+Flask = ">=0.9"
 
 [[package]]
 name = "itsdangerous"
@@ -201,4 +200,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<4"
-content-hash = "09d920036804daabf168a441bb7ed331a20b83c3b5e06a268130f77f3f5bc861"
+content-hash = "9bdb318365097a29f53f5e16f1f03296935ab8adeb1d458ed2a58fc48182804c"
