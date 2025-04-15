@@ -79,6 +79,7 @@ const OcclusionAnalysis: React.FC = () => {
             <div className="glass-panel rounded-xl p-6 neon-border">
               <div className="relative" style={{ width: 'fit-content' }}>
                 <img
+                crossOrigin="anonymous"
                   ref={imageRef}
                   src={selectedImage.url}
                   alt={selectedImage.name}
