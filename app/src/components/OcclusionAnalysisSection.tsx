@@ -45,7 +45,7 @@ const OcclusionAnalysis: React.FC = () => {
       <h2 className="text-3xl font-bold mb-8 text-slate-200 mt-4">Occlusion Sensitivity</h2>
       <div className="grid lg:grid-cols-2 gap-8">
         <div className="space-y-6">
-          <div className="glass-panel rounded-xl p-6 neon-border">
+          <div className="glass-panel rounded-xl p-6 neon-border z-50">
             <h2 className="text-2xl font-bold mb-4 text-slate-200">Image Selection</h2>
             <ImageSelector onImageSelect={handleImageSelect} />
           </div>
@@ -54,6 +54,7 @@ const OcclusionAnalysis: React.FC = () => {
             <div className="glass-panel rounded-xl p-6 neon-border">
               <div className="relative" style={{ width: 'fit-content' }}>
                 <img
+                  ref={imageRef}
                   src={selectedImage.url}
                   alt={selectedImage.name}
                   className="rounded-lg"

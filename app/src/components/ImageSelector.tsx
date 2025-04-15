@@ -2,37 +2,19 @@ import React, { useRef } from 'react';
 import AsyncSelect from 'react-select/async';
 import { ImageData } from '../types';
 import { Search, Image as ImageIcon } from 'lucide-react';
-import { api, getImageList } from '../api';
+import { api } from '../api';
 
 interface ImageSelectorProps {
   onImageSelect: (image: ImageData) => void;
 }
 
-const demoImages: ImageData[] = [
-  {
-    name: "Mountain Landscape",
-    url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4",
-  },
-  {
-    name: "Ocean Sunset",
-    url: "https://images.unsplash.com/photo-1503803548695-c2a7b4a5b875",
-  },
-  {
-    name: "Forest Path",
-    url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
-  },
-  {
-    name: "City Skyline",
-    url: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000",
-  }
-];
 
 const ImageSelector: React.FC<ImageSelectorProps> = ({ onImageSelect }) => {
   const latestRequest = useRef<Promise<ImageData[]>>()
 
   const loadImagesList = async (inputValue: string) => {
     const myPromise = latestRequest.current ?? api.getImageList()
-     
+
     try {
       latestRequest.current = myPromise
       const result = await myPromise
@@ -40,18 +22,19 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ onImageSelect }) => {
       const filteredImages = result.filter(image =>
         image.name.toLowerCase().includes(inputValue.toLowerCase())
       );
-  
+
       return filteredImages.map(image => ({
         value: image,
         label: image.name
       }));
     } catch (e) {
-      if (latestRequest.current == myPromise){
+      if (latestRequest.current == myPromise) {
         latestRequest.current = undefined
       }
       throw e
     }
   };
+
 
   const customStyles = {
     control: (base: any) => ({
@@ -77,7 +60,12 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ onImageSelect }) => {
     menu: (base: any) => ({
       ...base,
       background: 'rgba(15, 23, 42, 0.9)',
-      backdropFilter: 'blur(10px)'
+      backdropFilter: 'blur(10px)',
+      zIndex: 50
+    }),
+    menuPortal: (base: any) => ({
+      ...base,
+      zIndex: 50
     }),
     singleValue: (base: any) => ({
       ...base,
@@ -98,6 +86,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ onImageSelect }) => {
         onChange={(option) => option && onImageSelect(option.value)}
         placeholder="Search for an image..."
         styles={customStyles}
+        menuPortalTarget={document.body}
         components={{
           DropdownIndicator: () => (
             <Search className="mr-2 h-4 w-4 text-slate-400" />
