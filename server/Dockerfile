@@ -15,4 +15,4 @@ COPY . .
 
 
 # Set the command to run the server script
-CMD ["python","main.py"]
+CMD ["./run.sh"]
